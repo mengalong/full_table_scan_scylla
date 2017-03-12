@@ -16,9 +16,6 @@ class ScyllaClient(object):
 
     @staticmethod
     def _init_connection(host=None, port=None):
-        if not host or not port:
-            print "error"
-            return None, None
         cluster = Cluster(host, port=port)
         session = cluster.connect()
         return cluster, session
@@ -45,7 +42,7 @@ if __name__ == "__main__":
     cmd = "TRUNCATE TABLE  example"
     data_obj.execute_cql(cmd)
 
-    max_record = int(sys.argv[1]) if sys.argv[1] else 100
+    max_record = int(sys.argv[1]) if len(sys.argv)>1 else 100
     print max_record
     for i in xrange(1, max_record):
         cmd = "insert into example (id, ck, v1, v2) " \

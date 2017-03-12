@@ -43,8 +43,6 @@ class SelectExample(scylladb.ScyllaClient):
                                          query_queue[1])
         statement = SimpleStatement(query_cmd)
         result = self.execute_cql(statement)
-        # for item in result:
-        #     print item
         return result
 
     def select_by_token(self, sid=None):
@@ -54,7 +52,7 @@ class SelectExample(scylladb.ScyllaClient):
                 result = self.select_data(sub_range)
             except Exception as err:
                 self.query_queue.put(sub_range)
-            # we also can put result into result_queue
+            # put result into result_queue
             self.result_queue.put(result)
 
 
@@ -95,9 +93,9 @@ if __name__ == "__main__":
         print("Init the sub-range failed for:%s" % err)
         sys.exit(1)
 
-    # init an obj of scylldb
     result_queue = Queue()
     try:
+        # init an scylldb obj
         select_obj = SelectExample(query_queue=query_queue,
                                    result_queue=result_queue)
     except Exception as err:
@@ -117,3 +115,8 @@ if __name__ == "__main__":
     except Exception as err:
         print("Select from scylladb failed for:%s" % err)
 
+    # if we want to access the result data, we can use like this
+    # while not result_queue.empty():
+    #     datas = result_queue.get()
+    #     for item in datas:
+    #         print item
