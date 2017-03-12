@@ -26,15 +26,20 @@ CREATE TABLE example (
     PRIMARY KEY(id, ck)
 );
 
-3. insert some data
+3. insert some data: You can execute cql via cqlsh:
 insert into example (id, ck, v1, v2) " values (1, 2, 'aa', 'bb')
+
+or execute the command:
+cd full_table_scan_scylla/
+python impl_scylla.py [row_num] 	# this will insert row_num rows data into the table scylladata.example
 ```
 
 ## step2: start the select process
 
-The command is :
+The execute command is :
 
 ```
+cd full_table_scan_scylla/
 python select_from_scylla.py
 ```
 
@@ -44,3 +49,26 @@ Currently, we put the result into result_queue in select_from_scylla.py.
 
 It's unsafe if there are too many data item in the table 'example'.
 
+# Configurations:
+
+In the file :full_table_scan_scylla/select_from_scylla.py, there are two public args like this:
+
+```
+# the configuration of scylla
+OPT_CONF = {
+    'host': ['127.0.0.1'],
+    'port': 9042,
+    'keyspace': 'scylladata',
+    'table': 'example'
+}
+```
+
+```
+# depends on the cluster size
+CLUSTER_INFO = {
+    'node_num': 1,
+    'core_num': 4
+}
+```
+
+You can modify it in your case.

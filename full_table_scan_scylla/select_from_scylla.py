@@ -116,4 +116,3 @@ if __name__ == "__main__":
             thread_item.join()
     except Exception as err:
         print("Select from scylladb failed for:%s" % err)
-

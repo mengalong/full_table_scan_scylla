@@ -16,9 +16,6 @@ class ScyllaClient(object):
 
     @staticmethod
     def _init_connection(host=None, port=None):
-        if not host or not port:
-            print "error"
-            return None, None
         cluster = Cluster(host, port=port)
         session = cluster.connect()
         return cluster, session
