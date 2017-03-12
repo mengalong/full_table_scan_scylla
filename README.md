@@ -72,6 +72,7 @@ CLUSTER_INFO = {
 ```
 
 You can modify it in your case.
+<<<<<<< HEAD
 
 # Some test data:
 
@@ -82,3 +83,5 @@ data-scale|select time|
 1000      |2.815
 10000     |2.166
 100000    |3.574
+=======
+>>>>>>> 0c44595ce2ad95b0af2ce234fbe4493f14fdd9e0

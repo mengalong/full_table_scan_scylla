@@ -114,9 +114,12 @@ if __name__ == "__main__":
             thread_item.join()
     except Exception as err:
         print("Select from scylladb failed for:%s" % err)
+<<<<<<< HEAD
 
     # if we want to access the result data, we can use like this
     # while not result_queue.empty():
     #     datas = result_queue.get()
     #     for item in datas:
     #         print item
+=======
+>>>>>>> 0c44595ce2ad95b0af2ce234fbe4493f14fdd9e0
