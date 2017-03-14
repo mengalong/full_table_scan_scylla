@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # coding: utf8
 
+import commands
 import random
 import sys
 
 from cassandra.cluster import Cluster
+from cassandra.query import SimpleStatement
 
 
 class ScyllaClient(object):
@@ -36,15 +38,21 @@ class ScyllaClient(object):
         result = self.session.execute(cql_cmd)
         return result
 
+    def clean_up(self):
+        self.cluster.shutdown()
+
 if __name__ == "__main__":
     data_obj = ScyllaClient()
     data_obj.set_keyspace("scylladata")
     cmd = "TRUNCATE TABLE  example"
-    data_obj.execute_cql(cmd)
+    statement = SimpleStatement(cmd)
+    data_obj.execute_cql(statement)
 
     max_record = int(sys.argv[1]) if len(sys.argv)>1 else 100
     print max_record
     for i in xrange(1, max_record):
         cmd = "insert into example (id, ck, v1, v2) " \
               "values (%s, 2, 'aa', 'bb')" % i
-        data_obj.execute_cql(cmd)
+        statement = SimpleStatement(cmd)
+        data_obj.execute_cql(statement)
+    data_obj.clean_up()
